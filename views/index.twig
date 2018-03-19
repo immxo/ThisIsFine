@@ -1,0 +1,26 @@
+{% extends 'layout.twig' %}
+
+{% block body %}
+
+   <div class="container entryJSON">
+       <div class="row">
+         <div class="col-lg-8 d-flex justify-content-end">
+           <textarea class="textarea" cols="76" rows="20"></textarea>
+         </div>
+           <div class="col-lg-2"></div>
+           <div class="col-lg-2 AllJsonEntry"></div>
+       </div>
+
+       <div class="row">
+           <div class="col-lg-8 d-flex justify-content-end">
+               <input class="deleteCheckBox" type="checkbox">Удалить после открытия
+               <button class="btn" onclick="saveJSON();">Сохранить</button>
+           </div>
+       </div>
+       <div class="row">
+           <div class="col-lg-12 linkEntry"></div>
+       </div>
+   </div>
+
+    {% include 'templates/getAllJson.html'%}
+{% endblock %}
