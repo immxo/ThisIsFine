@@ -9,7 +9,8 @@ function getAllJson() {
     })
         .done(function (data) {
             data.item.forEach(function (item) {
-            handlebars('.AllJsonTemplate','.AllJsonEntry',false, {link: item.link});
+                let size = ' '+ item.size + 'kB';
+                handlebars('.AllJsonTemplate','.AllJsonEntry',false, {link: item.link, size: size});
 
         });
     });
