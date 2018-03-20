@@ -13,6 +13,8 @@
 
        <div class="row">
            <div class="col-lg-8 d-flex justify-content-end">
+               <input type="file" class="inputFile">
+               <button onclick="uploadFile();">Загрузить</button>
                <button onclick="convertToXml();">xml</button>
                <input class="deleteCheckBox" type="checkbox">Удалить после открытия
                <button class="btn" onclick="saveJSON();">Сохранить</button>
@@ -23,6 +25,6 @@
        </div>
    </div>
 
-    {% include 'templates/convertToXml.html'%}
+    {% include 'templates/textareaRender.html'%}
     {% include 'templates/getAllJson.html'%}
 {% endblock %}

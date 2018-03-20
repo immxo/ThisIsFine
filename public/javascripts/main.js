@@ -86,7 +86,7 @@ function convertToXml() {
         })
             .done(function (data) {
 
-                handlebars('.convertToXmlTemplate','.textareaEntry',true, {dataXml: data.dataXml});
+                handlebars('.textareaTemplate','.textareaEntry',true, {data: data.dataXml});
 
             });
     }
@@ -95,6 +95,23 @@ function convertToXml() {
     }
 }
 
+function uploadFile() {
+    let file = $(".inputFile").prop('files')[0];
+
+    let size = file.size;
+    let sizeStr = 'Размер: ' + (size/1024).toFixed(1) + 'kB';
+
+
+
+    let reader = new FileReader();
+    reader.onload = function(event) {
+        let dataFile = event.target.result;
+        handlebars('.textareaTemplate','.textareaEntry',true, {data: dataFile, sizeStr: sizeStr});
+    };
+
+    reader.readAsText(file);
+
+}
 
 function handlebars(template, entry, empty, data){
     var templateScript = $(template).html();
