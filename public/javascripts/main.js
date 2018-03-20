@@ -17,7 +17,7 @@ function getAllJson() {
 }
 
 function saveJSON(){
-    if($('.deleteCheckBox').prop('checked')){
+    if($('.checkbox').prop('checked')){
         var deleteCheck = true;
         console.log(deleteCheck);
     }

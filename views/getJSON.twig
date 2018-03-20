@@ -2,16 +2,26 @@
 
 {% block body %}
 
-<div class="container entryJSON">
-    <div class="col-lg-8 d-flex justify-content-end">
-        <textarea class="textarea" cols="76" rows="20" readonly>{{ dataJSON }}</textarea>
+<div class="container">
+    <div class="row">
+        <div class="col-lg-2"></div>
+        <div class="col-lg-8 d-flex justify-content-end">
+            <textarea class="textarea" cols="78" rows="15" readonly>{{ dataJSON }}</textarea>
+        </div>
     </div>
-    <div class="col-lg-8 d-flex justify-content-end">
-        <a href="/{{ link }}"  download>Скачать</a>
-        <button class="btn" onclick="saveJSON();">Сохранить</button>
-        <button class="btn" onclick="editJSON();">Редактировать</button>
+    <div class="row">
+        <div class="col-lg-2"></div>
+        <div class="col-lg-8 d-flex justify-content-between">
+            <div class="d-flex justify-content-start">
+                <a href="/{{ link }}" download><button class="btn" ><i class="fas fa-cloud-download-alt"></i> Скачать</button></a>
+            </div>
+            <div class="d-flex justify-content-end">
+                <button class="btn" onclick="saveJSON();"><i class="fas fa-save"></i> Сохранить</button>
+                <button class="btn" onclick="editJSON();"><i class="fas fa-edit"></i> Редактировать</button>
+            </div>
+        </div>
+        <div class="linkEntry"></div>
     </div>
-    <div class="linkEntry"></div>
 </div>
 
 {% endblock %}

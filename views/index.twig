@@ -4,20 +4,34 @@
 
    <div class="container entryJSON">
        <div class="row">
-         <div class="col-lg-8 d-flex justify-content-end textareaEntry">
-           <textarea class="textarea" cols="76" rows="20"></textarea>
-         </div>
            <div class="col-lg-2"></div>
+         <div class="col-lg-8 d-flex justify-content-end textareaEntry">
+           <textarea class="textarea" cols="78" rows="15"></textarea>
+         </div>
            <div class="col-lg-2 AllJsonEntry"></div>
        </div>
 
        <div class="row">
-           <div class="col-lg-8 d-flex justify-content-end">
-               <input type="file" class="inputFile">
-               <button onclick="uploadFile();">Загрузить</button>
-               <button onclick="convertToXml();">xml</button>
-               <input class="deleteCheckBox" type="checkbox">Удалить после открытия
-               <button class="btn" onclick="saveJSON();">Сохранить</button>
+           <div class="col-lg-2"></div>
+           <div class="col-lg-8 d-flex justify-content-between">
+               <div class="d-flex justify-content-start">
+                   <label class="btn btn__file">Выберите файл...
+                    <input type="file" class="inputFile" hidden>
+                   </label>
+                   <button class="btn" onclick="uploadFile();"><i class="fas fa-cloud-upload-alt"></i> Загрузить</button>
+               </div>
+               
+               <div class="d-flex justify-content-end">
+                   <button class="btn" onclick="convertToXml();"><i class="fas fa-code"></i> xml</button>
+                   <button class="btn" onclick="saveJSON();"><i class="fas fa-save"></i> Сохранить</button>
+               </div>
+           </div>
+       </div>
+       <div class="row">
+           <div class="col-lg-5"></div>
+           <div class="col-lg-3">
+               <input class="checkbox" type="checkbox" id="checkbox">
+               <label for="checkbox">Удалить после открытия</label>
            </div>
        </div>
        <div class="row">
