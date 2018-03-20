@@ -8,7 +8,6 @@ function getAllJson() {
         type: 'get',
     })
         .done(function (data) {
-            console.log(data);
             data.item.forEach(function (item) {
             handlebars('.AllJsonTemplate','.AllJsonEntry',false, {link: item.link});
 
@@ -53,7 +52,7 @@ function getJSON(link){
 
     })
         .done(function (data) {
-            handlebars('.getJSON','.entryJSON',true, {dataJSON:data.dataJSON});
+
         });
 }
 
@@ -101,14 +100,11 @@ function uploadFile() {
     let size = file.size;
     let sizeStr = 'Размер: ' + (size/1024).toFixed(1) + 'kB';
 
-
-
     let reader = new FileReader();
     reader.onload = function(event) {
         let dataFile = event.target.result;
         handlebars('.textareaTemplate','.textareaEntry',true, {data: dataFile, sizeStr: sizeStr});
     };
-
     reader.readAsText(file);
 
 }

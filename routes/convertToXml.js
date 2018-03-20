@@ -1,7 +1,6 @@
-const fs = require('fs');
 const json2xml = require('json2xml');
 
-module.exports = function(app, finedb) {
+module.exports = function(app) {
     app.post('/convertToXml', (req, res) => {
         const data = req.body.dataJSON;
         let dataXml = json2xml(JSON.parse(data));

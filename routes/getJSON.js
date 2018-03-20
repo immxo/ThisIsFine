@@ -7,7 +7,7 @@ module.exports = function(app, finedb) {
                 res.send({'error': 'An error has occurred'});
             } else {
                 if (item) {
-                    res.render('getJSON', {dataJSON: item.data});
+                    res.render('getJSON', {dataJSON: item.data, link: link});
                     if(item.deleteCheck == 'true'){
                         function deleteJSON() {
                             finedb.collection('SavedJSON').remove({link:link});
