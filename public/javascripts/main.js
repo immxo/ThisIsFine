@@ -71,6 +71,30 @@ function linkGenerator() {
     return link;
 }
 
+function convertToXml() {
+    let data = $('.textarea').val();
+    try{
+        let dataParse = JSON.parse(data);
+        let dataStr = JSON.stringify(dataParse, null, 4);
+
+        $.ajax({
+            url: "/convertToXml",
+            type: 'post',
+            data: {
+                dataJSON:dataStr
+            }
+        })
+            .done(function (data) {
+
+                handlebars('.convertToXmlTemplate','.textareaEntry',true, {dataXml: data.dataXml});
+
+            });
+    }
+    catch(err) {
+        alert("Это не JSON");
+    }
+}
+
 
 function handlebars(template, entry, empty, data){
     var templateScript = $(template).html();
