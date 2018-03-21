@@ -5,4 +5,4 @@ module.exports = function(app, finedb) {
             res.json({item:item})
         });
     });
-}
+};

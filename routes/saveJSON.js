@@ -3,50 +3,26 @@ const fs = require("fs");
 module.exports = function(app, finedb) {
     app.post('/save', (req, res) => {
         const link = req.body.link;
+        const fileName = req.body.fileName;
         const dataJSON = req.body.dataJSON;
         const deleteCheck = req.body.deleteCheck;
-        const file = link + '.json';
+        const file = fileName + '.json';
+        fs.writeFileSync(file, dataJSON);
+        const stats = fs.statSync(file);
+        const size = stats.size;
 
-        fs.writeFile(file, dataJSON);
-
-        function size(file) {
-            const stats = fs.statSync(file);
-            const fileSize = stats.size;
-            return fileSize;
-        }
-
-        finedb.collection('SavedJSON').findOne({link: link},(err, item) => {
+        finedb.collection('SavedJSON').insert(
+        {link: link, data:dataJSON, deleteCheck: deleteCheck, size: size, fileName: fileName}, (err) => {
             if (err) {
-                res.send({'error':'An error has occurred'});
-            } else {
-                if(item == null){
-                    finedb.collection('SavedJSON').insert(
-                        {link: link, data:dataJSON, deleteCheck: deleteCheck, size: size(file)}, (err) => {
-                            if (err) {
-                                res.send({ 'error': 'An error has occurred' });
-                            }
-                            else {
-                                res.json({
-                                    status: 'true', link: link
-                                })
-                                fs.unlink(file);
-                            }
-                        })}
-                else{
-                    finedb.collection('SavedJSON').update({link: link},
-                        {link: link, data: dataJSON, deleteCheck: deleteCheck, size: size(file)},(err) => {
-                            if (err) {
-                                res.send({ 'error': 'An error has occurred' });
-                            } else {
-                                res.json({
-                                    status: 'true', link: link
-                                })
-                                fs.unlink(file);
-                            }
-                        })}
+                res.send({ 'error': 'An error has occurred' });
             }
-        });
-
+            else {
+                res.json({
+                    link: link, fileName: fileName
+                });
+                fs.unlink(file);
+            }
+        })
     });
-
 };
+

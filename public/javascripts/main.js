@@ -1,5 +1,10 @@
 $( document ).ready(function() {
     getAllJson();
+
+    $(".inputFile").change(function() {
+        let file = $(".inputFile").prop('files')[0];
+        $('.fileName__label').empty().append(file.name);
+    });
 });
 
 function getAllJson() {
@@ -8,51 +13,96 @@ function getAllJson() {
         type: 'get',
     })
         .done(function (data) {
+            $('.AllJsonEntry').empty();
+            var totalSize = 0;
             data.item.forEach(function (item) {
-                let size = ' '+ item.size + 'kB';
-                handlebars('.AllJsonTemplate','.AllJsonEntry',false, {link: item.link, size: size});
-
+                totalSize += item.size;
+                let size = ' '+ (item.size/1024).toFixed(2) + 'kB';
+                handlebars('.AllJsonTemplate','.AllJsonEntry',false, {link: item.link, size: size, fileName: item.fileName});
         });
+            $('.AllJsonEntry').append("<p>Общий объем: </p>"+ (totalSize/1024).toFixed(2) + "kB");
     });
 }
 
-function saveJSON(){
-    if($('.checkbox').prop('checked')){
-        var deleteCheck = true;
-        console.log(deleteCheck);
-    }
+function saveJSON(link){
     let data = $('.textarea').val();
-    try{
-        let dataParse = JSON.parse(data);
-        let dataStr = JSON.stringify(dataParse, null, 4);
-
-        $.ajax({
-            url: "/save",
-            type: 'post',
-            data: {
-                link:linkGenerator(),
-                dataJSON: dataStr,
-                deleteCheck: deleteCheck
-            }
-        })
-            .done(function (data) {
-
-                handlebars('.linkTemplate','.linkEntry',false, {link: data.link});
-
-            });
+    try {
+        var dataParse = JSON.parse(data);
     }
     catch(err) {
-        alert("Это не JSON");
+        $('.errorMessage').empty().append('Это не JSON');
     }
+
+    if($('.checkbox').prop('checked')){
+        var deleteCheck = true;
+    }
+
+    if(link == ''){
+        link = linkGenerator();
+    }
+
+    let dataStr = JSON.stringify(dataParse, null, 4);
+    let fileName = $('.fileName__input').val();
+    if(fileName == ''){
+        fileName = link;
+    }
+
+    $.ajax({
+        url: "/save",
+        type: 'post',
+        data: {
+            link: link,
+            dataJSON: dataStr,
+            deleteCheck: deleteCheck,
+            fileName: fileName
+        }
+    })
+        .done(function (data) {
+            handlebars('.linkTemplate','.linkEntry',false, {link: data.link});
+            getAllJson();
+        });
+}
+
+function updateJSON(link) {
+    let data = $('.textarea').val();
+    try {
+        var dataParse = JSON.parse(data);
+    }
+    catch(err) {
+        $('.errorMessage').empty().append('Это не JSON');
+    }
+
+    if($('.checkbox').prop('checked')){
+        var deleteCheck = true;
+    }
+    let dataStr = JSON.stringify(dataParse, null, 4);
+    let fileName = $('.fileName__input').val();
+    if(fileName == ''){
+        fileName = link;
+    }
+
+    $.ajax({
+        url: "/update",
+        type: 'post',
+        data: {
+            link: link,
+            dataJSON: dataStr,
+            deleteCheck: deleteCheck,
+            fileName: fileName
+        }
+    })
+        .done(function (data) {
+            handlebars('.linkTemplate','.linkEntry',false, {link: link});
+            getAllJson();
+        });
 }
 
 function getJSON(link){
     $.ajax({
         url: "/getJSON/"+link,
         type: 'get',
-
     })
-        .done(function (data) {
+        .done(function () {
 
         });
 }
@@ -71,6 +121,19 @@ function linkGenerator() {
     return link;
 }
 
+function deleteJSON(link){
+    $.ajax({
+        url: "/delete",
+        type: "delete",
+        data: {
+            link: link
+        }
+    })
+        .done(function (data) {
+            location.href= '/';
+        });
+}
+
 function convertToXml() {
     let data = $('.textarea').val();
     try{
@@ -85,9 +148,7 @@ function convertToXml() {
             }
         })
             .done(function (data) {
-
                 handlebars('.textareaTemplate','.textareaEntry',true, {data: data.dataXml});
-
             });
     }
     catch(err) {
@@ -97,14 +158,15 @@ function convertToXml() {
 
 function uploadFile() {
     let file = $(".inputFile").prop('files')[0];
-
+    let nameFile = file.name;
     let size = file.size;
-    let sizeStr = 'Размер: ' + (size/1024).toFixed(1) + 'kB';
+    let sizeStr =(size/1024).toFixed(2) + 'kB';
 
     let reader = new FileReader();
     reader.onload = function(event) {
         let dataFile = event.target.result;
-        handlebars('.textareaTemplate','.textareaEntry',true, {data: dataFile, sizeStr: sizeStr});
+        handlebars('.textareaTemplate','.textareaEntry',true, {data: dataFile, sizeStr: sizeStr, nameFile: nameFile});
+        $('.fileName__label').empty().append('Выберите файл...');
     };
     reader.readAsText(file);
 
