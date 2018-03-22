@@ -25,54 +25,59 @@ function getAllJson() {
                 handlebars('.AllJsonTemplate','.AllJsonEntry',false, {link: item.link, size: size,
                     fileName: item.fileName, token: token});
         });
-            $('.AllJsonEntry').append("<p>Общий объем: </p>"+ (totalSize/1024).toFixed(2) + "kB");
+            $('.AllJsonEntry').append("<p class='text'>Общий объем: "+ (totalSize/1024).toFixed(2) + "kB</p>");
     });
 }
 
-function saveJSON(link){
+function saveJSON(){
     let data = $('.textarea').val();
-    try {
-        var dataParse = JSON.parse(data);
-    }
-    catch(err) {
-        $('.errorMessage').empty().append('Это не JSON');
-    }
+    if(data) {
+        try {
+            let dataParse = JSON.parse(data);
 
-    if($('.deleteCheck').prop('checked')){
-        var deleteCheck = true;
-    }
+            if ($('.deleteCheck').prop('checked')) {
+                var deleteCheck = true;
+            }
 
-    if($('.privateCheck').prop('checked')){
-        var privateCheck = true;
-    }
+            if ($('.privateCheck').prop('checked')) {
+                var privateCheck = true;
+            }
 
-    if(link == ''){
-        link = linkGenerator();
-    }
+            let dataStr = JSON.stringify(dataParse, null, 4);
+            let fileName = $('.fileName__input').val();
+            if (fileName == '') {
+                fileName = link;
+            }
 
-    let dataStr = JSON.stringify(dataParse, null, 4);
-    let fileName = $('.fileName__input').val();
-    if(fileName == ''){
-        fileName = link;
-    }
-
-    $.ajax({
-        url: "/save",
-        type: 'post',
-        data: {
-            link: link,
-            dataJSON: dataStr,
-            deleteCheck: deleteCheck,
-            privateCheck: privateCheck,
-            fileName: fileName
+            $.ajax({
+                url: "/save",
+                type: 'post',
+                data: {
+                    link: linkGenerator(),
+                    dataJSON: dataStr,
+                    deleteCheck: deleteCheck,
+                    privateCheck: privateCheck,
+                    fileName: fileName
+                }
+            })
+                .done(function (data) {
+                    handlebars('.linkTemplate', '.linkEntry', true, {
+                        link: data.link, token: data.token,
+                        tokenCheck: data.tokenCheck
+                    });
+                    getAllJson();
+                    localStorage.setItem('token', data.token);
+                });
         }
-    })
-        .done(function (data) {
-            handlebars('.linkTemplate','.linkEntry',false, {link: data.link, token: data.token,
-                tokenCheck: data.tokenCheck});
-            getAllJson();
-            localStorage.setItem('token', data.token);
-        });
+
+        catch (err) {
+            $('.errorMessage').empty().append('Это не JSON');
+        }
+    }
+    else{
+        $('.errorMessage').empty().append('Необходимо что то ввести');
+    }
+
 }
 
 function updateJSON(link) {
