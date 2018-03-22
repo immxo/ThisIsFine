@@ -1,8 +1,14 @@
 <script class="linkTemplate" type="text/x-handlebars-template">
     {% verbatim %}
 
+    {{#if_eq tokenCheck false}}
     <p>Ваша ссылка для просмотра:</p>
-    <a href="/getJSON/{{link}}" onclick="getJSON('{{link}}');">localhost:3000/getJSON/{{link}}</a>
+    <a href="/getJSON/{{link}}">localhost:3000/getJSON/{{link}}</a>
+    {{else}}
+    <p>Ваша ссылка для просмотра:</p>
+    <a href="/getJSON/{{link}}/{{token}}" >localhost:3000/getJSON/{{link}}/{{token}}</a>
+    {{/if_eq}}
+
 
     {% endverbatim %}
 </script>

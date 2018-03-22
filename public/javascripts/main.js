@@ -14,11 +14,16 @@ function getAllJson() {
     })
         .done(function (data) {
             $('.AllJsonEntry').empty();
-            var totalSize = 0;
+            let totalSize = 0;
+            let token = "";
             data.item.forEach(function (item) {
+                if(item.tokenCheck == true){
+                    token = localStorage.getItem('token');
+                }
                 totalSize += item.size;
                 let size = ' '+ (item.size/1024).toFixed(2) + 'kB';
-                handlebars('.AllJsonTemplate','.AllJsonEntry',false, {link: item.link, size: size, fileName: item.fileName});
+                handlebars('.AllJsonTemplate','.AllJsonEntry',false, {link: item.link, size: size,
+                    fileName: item.fileName, token: token});
         });
             $('.AllJsonEntry').append("<p>Общий объем: </p>"+ (totalSize/1024).toFixed(2) + "kB");
     });
@@ -33,8 +38,12 @@ function saveJSON(link){
         $('.errorMessage').empty().append('Это не JSON');
     }
 
-    if($('.checkbox').prop('checked')){
+    if($('.deleteCheck').prop('checked')){
         var deleteCheck = true;
+    }
+
+    if($('.privateCheck').prop('checked')){
+        var privateCheck = true;
     }
 
     if(link == ''){
@@ -54,12 +63,15 @@ function saveJSON(link){
             link: link,
             dataJSON: dataStr,
             deleteCheck: deleteCheck,
+            privateCheck: privateCheck,
             fileName: fileName
         }
     })
         .done(function (data) {
-            handlebars('.linkTemplate','.linkEntry',false, {link: data.link});
+            handlebars('.linkTemplate','.linkEntry',false, {link: data.link, token: data.token,
+                tokenCheck: data.tokenCheck});
             getAllJson();
+            localStorage.setItem('token', data.token);
         });
 }
 
@@ -94,16 +106,6 @@ function updateJSON(link) {
         .done(function (data) {
             handlebars('.linkTemplate','.linkEntry',false, {link: link});
             getAllJson();
-        });
-}
-
-function getJSON(link){
-    $.ajax({
-        url: "/getJSON/"+link,
-        type: 'get',
-    })
-        .done(function () {
-
         });
 }
 
@@ -182,3 +184,11 @@ function handlebars(template, entry, empty, data){
         $(entry).append(template(data));
     }
 }
+
+Handlebars.registerHelper('if_eq', function(a, b, opts) {
+    if (a == b) {
+        return opts.fn(this);
+    } else {
+        return opts.inverse(this);
+    }
+});

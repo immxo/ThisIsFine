@@ -4,13 +4,19 @@
 
    <div class="container">
        <div class="row">
-           <div class="col-lg-2"></div>
-           <div class="col-lg-8 d-flex justify-content-end textareaEntry">
+           <div class="col-lg-3">
+               <input class="deleteCheck" type="checkbox" id="deleteCheck">
+               <label for="deleteCheck">Удалить после открытия</label>
+               <input class="privateCheck" type="checkbox" id="privateCheck">
+               <label for="privateCheck">Приватная ссылка</label>
+           </div>
+           <div class="col-lg-7 textareaEntry">
                <div>
                    <span class="errorMessage"></span>
                    <input type="text" placeholder="Название файла" class="fileName__input">
-                   <textarea class="textarea" cols="78" rows="15"></textarea>
+                   <textarea class="textarea" cols="60" rows="15"></textarea>
                </div>
+
            </div>
            <div class="col-lg-2 AllJsonEntry"></div>
        </div>
@@ -34,8 +40,10 @@
        <div class="row">
            <div class="col-lg-5"></div>
            <div class="col-lg-3">
-               <input class="checkbox" type="checkbox" id="checkbox">
-               <label for="checkbox">Удалить после открытия</label>
+
+           </div>
+           <div class="col-lg-3">
+
            </div>
        </div>
        <div class="row">
