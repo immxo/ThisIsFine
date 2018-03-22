@@ -16,7 +16,7 @@
            </div>
            <div class="col-lg-7">
                <div class="textareaEntry">
-                   <input type="text" placeholder="Название файла" class="fileName__input text">
+                   <input type="text" placeholder="Название файла" class="fileName__input text" pattern="(?=^.{0,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$">
                    <span class="errorMessage"></span>
                    <textarea class="textarea text" cols="76" rows="20"></textarea>
                </div>

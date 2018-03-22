@@ -1,6 +1,6 @@
 <script class="AllJsonTemplate" type="text/x-handlebars-template">
     {% verbatim %}
-        {{#if_eq token ""}}
+        {{#if_eq tokenCheck false}}
         <p><a href = "/getJSON/{{link}}"; class="text text__link">{{fileName}}</a>{{size}}</p>
         {{else}}
         <p><a href = "/getJSON/{{link}}/{{token}}"; class="text text__link">{{fileName}}</a>{{size}}</p>

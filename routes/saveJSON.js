@@ -36,7 +36,7 @@ module.exports = function(app, finedb) {
                     }
                     else {
                         res.json({
-                            link: link, fileName: fileName, token: userToken, tokenCheck: tokenCheck
+                            fileName: fileName, token: userToken, tokenCheck: tokenCheck
                         });
                         fs.unlink(file);
                     }

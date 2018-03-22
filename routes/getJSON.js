@@ -18,7 +18,7 @@ module.exports = function(app, finedb) {
                     }
                 }
                 else{
-                    res.render('error',{message: 'ошибка'});
+                    res.render('privateLinkError');
                 }
             }
         });
@@ -42,7 +42,7 @@ module.exports = function(app, finedb) {
                     }
                 }
                 else {
-                    res.render('error', {message: 'ошибка'});
+                    res.render('privateLinkError');
                 }
             }
         });

@@ -6,7 +6,7 @@ var cookieParser     = require('cookie-parser');
 var bodyParser       = require('body-parser');
 const MongoClient    = require('mongodb').MongoClient;
 const db             = require('./config/db');
-const port           = 3000;
+const port           = 3001;
 
 var app = express();
 

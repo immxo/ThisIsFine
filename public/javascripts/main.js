@@ -23,13 +23,14 @@ function getAllJson() {
                 totalSize += item.size;
                 let size = ' '+ (item.size/1024).toFixed(2) + 'kB';
                 handlebars('.AllJsonTemplate','.AllJsonEntry',false, {link: item.link, size: size,
-                    fileName: item.fileName, token: token});
+                    fileName: item.fileName, token: token, tokenCheck: item.tokenCheck});
         });
             $('.AllJsonEntry').append("<p class='text'>Общий объем: "+ (totalSize/1024).toFixed(2) + "kB</p>");
     });
 }
 
 function saveJSON(){
+    $('.errorMessage').empty();
     let data = $('.textarea').val();
     if(data) {
         try {
@@ -44,6 +45,7 @@ function saveJSON(){
             }
 
             let dataStr = JSON.stringify(dataParse, null, 4);
+            let link = linkGenerator();
             let fileName = $('.fileName__input').val();
             if (fileName == '') {
                 fileName = link;
@@ -53,7 +55,7 @@ function saveJSON(){
                 url: "/save",
                 type: 'post',
                 data: {
-                    link: linkGenerator(),
+                    link: link,
                     dataJSON: dataStr,
                     deleteCheck: deleteCheck,
                     privateCheck: privateCheck,
@@ -61,8 +63,7 @@ function saveJSON(){
                 }
             })
                 .done(function (data) {
-                    handlebars('.linkTemplate', '.linkEntry', true, {
-                        link: data.link, token: data.token,
+                    handlebars('.linkTemplate', '.linkEntry', true, {link: link, token: data.token,
                         tokenCheck: data.tokenCheck
                     });
                     getAllJson();
@@ -122,7 +123,7 @@ function linkGenerator() {
     let link = "";
     let possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
-    for (let i = 0; i < 6; i++)
+    for (let i = 0; i < 8; i++)
         link += possible.charAt(Math.floor(Math.random() * possible.length));
 
     return link;
