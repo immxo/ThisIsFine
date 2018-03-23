@@ -6,7 +6,6 @@ function validateFileName() {
     $(".fileName__form").validate({
         rules: {
             fileName__input: {
-                required: false,
                 accept: "[а-яА-ЯёЁ+\\w+.+\\s]"
             }
         },

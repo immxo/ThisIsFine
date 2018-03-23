@@ -1,7 +1,13 @@
 function saveJSON() {
     $('.errorMessage').empty();
-    validateFileName();
-
+    let fileName = $('.fileName__input').val();
+    let link = linkGenerator();
+    if(fileName == ''){
+        fileName = link;
+    }
+    else {
+        validateFileName();
+    }
     if ($('.fileName__form').valid()) {
         let data = $('.textarea').val();
         if (data) {
@@ -17,11 +23,6 @@ function saveJSON() {
                 }
 
                 let dataStr = JSON.stringify(dataParse, null, 4);
-                let link = linkGenerator();
-                let fileName = $('.fileName__input').val();
-                if (fileName == '') {
-                    fileName = link;
-                }
 
                 $.ajax({
                     url: "/save",

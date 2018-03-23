@@ -1,24 +1,28 @@
 function updateJSON(link) {
     $('.errorMessage').empty();
-    validateFileName();
+    let fileName = $('.fileName__input').val();
+    if(fileName == ''){
+        fileName = link;
+    }
+    else {
+        validateFileName();
+    }
+
     if ($('.fileName__form').valid()) {
         let data = $('.textarea').val();
         if (data) {
             try {
                 let dataParse = JSON.parse(data);
-
+                var deleteCheck = 'false';
+                var tokenCheck = 'false';
                 if ($('.deleteCheck').prop('checked')) {
-                    var deleteCheck = true;
+                    deleteCheck = true;
                 }
                 if ($('.privateCheck').prop('checked')) {
-                    var tokenCheck = true;
+                    tokenCheck = true;
                 }
 
                 let dataStr = JSON.stringify(dataParse, null, 4);
-                let fileName = $('.fileName__input').val();
-                if (fileName == '') {
-                    fileName = link;
-                }
                 let token = localStorage.getItem('token');
 
                 $.ajax({

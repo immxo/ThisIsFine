@@ -15,7 +15,6 @@ module.exports = function(app, finedb) {
         const stats = fs.statSync(file);
         const size = stats.size;
 
-
         const agent = useragent.parse(req.headers['user-agent']);
         const payload = agent.source;
         const secret = new Buffer('FineIsThis','base64');
