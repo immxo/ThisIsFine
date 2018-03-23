@@ -1,7 +1,7 @@
 <script class="linkTemplate" type="text/x-handlebars-template">
     {% verbatim %}
 
-    {{#if_eq tokenCheck false}}
+    {{#if_eq tokenCheck 'false'}}
     <a href="/getJSON/{{link}}">Ваша ссылка для просмотра</a>
     {{else}}
     <a href="/getJSON/{{link}}/{{token}}" >Ваша приватная ссылка для просмотра</a>

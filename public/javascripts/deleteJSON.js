@@ -1,4 +1,4 @@
-function deleteJSON(link){
+function deleteJSON(link) {
     $.ajax({
         url: "/delete",
         type: "delete",
@@ -6,7 +6,7 @@ function deleteJSON(link){
             link: link
         }
     })
-        .done(function (data) {
-            location.href= '/';
+        .done(function () {
+            location.replace('http://localhost:3000/');
         });
 }

@@ -4,12 +4,13 @@ module.exports = function(app, finedb) {
         const token = req.params.token;
 
         finedb.collection('SavedJSON').findOne({link: link}, (err, item) => {
-            if (err) {
-                res.send({'error': 'An error has occurred'});
+            if (err || item == null) {
+                res.render('error', {title: 'Ошибка', message:'Этот файл был удален'});
             } else {
                 if (token == item.token) {
                     res.render('getJSON', {dataJSON: item.data, link: link, size: (item.size/1024).toFixed(2),
-                        fileName: item.fileName, title: 'This is Fine: просмотр файла ' + item.fileName});
+                        fileName: item.fileName, title: 'This is Fine: просмотр файла ' + item.fileName,
+                        tokenCheck: item.tokenCheck});
                     if(item.deleteCheck == 'true'){
                         function deleteJSON() {
                             finedb.collection('SavedJSON').remove({link:link});
@@ -18,7 +19,7 @@ module.exports = function(app, finedb) {
                     }
                 }
                 else{
-                    res.render('privateLinkError');
+                    res.render('privateLinkError', {title: 'Ошибка доступа'});
                 }
             }
         });
@@ -28,10 +29,10 @@ module.exports = function(app, finedb) {
         const link = req.params.link;
 
         finedb.collection('SavedJSON').findOne({link: link}, (err, item) => {
-            if (err) {
-                res.send({'error': 'An error has occurred'});
+            if (err || item == null) {
+                res.render('error', {title: 'Ошибка', message:'Этот файл был удален'});
             } else {
-                if (item.tokenCheck == false) {
+                if (item.tokenCheck == 'false') {
                     res.render('getJSON', {dataJSON: item.data, link: link, size: (item.size/1024).toFixed(2),
                         fileName: item.fileName, title: 'This is Fine: просмотр файла ' + item.fileName});
                     if(item.deleteCheck == 'true'){
@@ -42,7 +43,7 @@ module.exports = function(app, finedb) {
                     }
                 }
                 else {
-                    res.render('privateLinkError');
+                    res.render('privateLinkError', {title: 'Ошибка доступа'});
                 }
             }
         });
