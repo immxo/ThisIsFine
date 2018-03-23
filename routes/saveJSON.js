@@ -14,7 +14,7 @@ module.exports = function(app, finedb) {
         fs.writeFileSync(file, dataJSON);
         const stats = fs.statSync(file);
         const size = stats.size;
-
+        fs.unlinkSync(file);
         const agent = useragent.parse(req.headers['user-agent']);
         const payload = agent.source;
         const secret = new Buffer('FineIsThis','base64');
@@ -31,7 +31,6 @@ module.exports = function(app, finedb) {
                         res.json({
                             fileName: fileName, token: userToken, tokenCheck: tokenCheck
                         });
-                        fs.unlink(file);
                     }
                 })
         });

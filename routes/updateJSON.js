@@ -12,7 +12,8 @@ module.exports = function(app, finedb) {
         fs.writeFileSync(file, dataJSON);
         const stats = fs.statSync(file);
         const size = stats.size;
-
+        fs.unlinkSync(file);
+        
         finedb.collection('SavedJSON').update({link: link},
             {link: link, data: dataJSON, deleteCheck: deleteCheck, size: size, fileName: fileName,tokenCheck: tokenCheck,
             token: token}, function(err){
@@ -22,7 +23,6 @@ module.exports = function(app, finedb) {
                     res.json({
                         link: link, fileName: fileName, tokenCheck: tokenCheck
                     });
-                    fs.unlink(file);
                 }
             })
 });
