@@ -4,39 +4,27 @@
   font: 14px 'Open sans';
 }
 
-.text__link{
-  color: #534ED9;
-}
-
-.text__checkbox{
-
-}
-
 label{
   margin: 0 0 11px 0 !important;
 }
 
 .logo{
-  background-image: url("../images/logo1.png");
+  background-image: url("../images/logo.png");
   width: 77px;
   height: 40px;
 }
 
 .navbar{
   background-color: #fff;
-  padding: 0 0 0 10px;
-  border-bottom: 2px solid #f5f5f5;
-  margin: 0 0 50px 0;
+  border: none;
+  padding: 0 !important;
+  margin: 0 0 100px 0;
 }
 
 .nav-link{
   font: 18px 'Open Sans' !important;
   color: #434a54 !important;
   opacity: 1 !important;
-}
-
-.textarea{
-  margin: 0 0 0 7px;
 }
 
 .btn{
@@ -55,7 +43,6 @@ label{
 }
 
 .fileName__input{
-  margin: 0 0 0 7px;
   width: 300px;
 }
 
@@ -107,5 +94,10 @@ label{
 .errorMessage{
   font: 14px 'Open sans';
   color: #FF0000;
+}
+
+.title{
+  font: 20px 'Open Sans';
+  text-align: center;
 }
 

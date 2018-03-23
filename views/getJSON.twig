@@ -2,33 +2,48 @@
 
 {% block body %}
 
+{% block js %}
+    <script src="/javascripts/updateJSON.js"></script>
+    <script src="/javascripts/deleteJSON.js"></script>
+{% endblock %}
+
 <div class="container">
     <div class="row">
-        <div class="col-lg-2"></div>
-        <div class="col-lg-8 d-flex justify-content-end textareaEntry">
+        <div class="col-lg-3">
             <div>
+                <input class="deleteCheck" type="checkbox" id="deleteCheck">
+                <label for="deleteCheck"></label><span class="text text__checkbox">Удалить после открытия</span>
+            </div>
+        </div>
+        <div class="col-lg-7">
+            <div class="textareaEntry">
+                <input type="text" placeholder="Название файла" class="fileName__input text" value="{{ fileName }}">
+                <span class="text">{{ size }} kB</span>
                 <span class="errorMessage"></span>
-                <input type="text" placeholder="Название файла" class="fileName__input" value="{{ fileName }}"> {{ size }} kB
                 <button class="btn" onclick="deleteJSON('{{ link }}');"><i class="fas fa-trash-alt"></i> Удалить</button>
-                <textarea class="textarea" cols="78" rows="15" readonly>{{ dataJSON }}</textarea>
+                <textarea class="textarea text" cols="77" rows="20" readonly>{{ dataJSON }}</textarea>
+            </div>
+
+            <div class="d-flex justify-content-between">
+                <div class="d-flex justify-content-start">
+                    <a href="/{{ link }}" download><button class="btn" ><i class="fas fa-cloud-download-alt"></i> Скачать</button></a>
+                </div>
+
+                <div class="d-flex justify-content-end">
+                    <button class="btn" onclick="convertToXml();"><i class="fas fa-code"></i> xml</button>
+                    <button class="btn" onclick="updateJSON('{{ link }}');"><i class="fas fa-save"></i> Сохранить</button>
+                    <button class="btn" onclick="editJSON();"><i class="fas fa-edit"></i> Редактировать</button>
+                </div>
             </div>
         </div>
         <div class="col-lg-2 AllJsonEntry"></div>
     </div>
-    <div class="row">
-        <div class="col-lg-2"></div>
-        <div class="col-lg-8 d-flex justify-content-between">
-            <div class="d-flex justify-content-start">
-                <a href="/{{ link }}" download><button class="btn" ><i class="fas fa-cloud-download-alt"></i> Скачать</button></a>
-            </div>
-            <div class="d-flex justify-content-end">
-                <button class="btn" onclick="convertToXml();"><i class="fas fa-code"></i> xml</button>
-                <button class="btn" onclick="updateJSON('{{ link }}');"><i class="fas fa-save"></i> Сохранить</button>
-                <button class="btn" onclick="editJSON();"><i class="fas fa-edit"></i> Редактировать</button>
-            </div>
-        </div>
-    </div>
-    <div class="linkEntry"></div>
-</div>
 
+
+    <div class="row">
+        <div class="col-lg-3"></div>
+        <div class="col-lg-9 linkEntry"></div>
+
+    </div>
+</div>
 {% endblock %}
