@@ -9,18 +9,12 @@ module.exports = function(app, finedb) {
         const fileName = req.body.fileName;
         const dataJSON = req.body.dataJSON;
         const deleteCheck = req.body.deleteCheck;
-        const privateCheck = req.body.privateCheck;
+        const tokenCheck = req.body.tokenCheck;
         const file = fileName + '.json';
         fs.writeFileSync(file, dataJSON);
         const stats = fs.statSync(file);
         const size = stats.size;
 
-        if(privateCheck){
-            var tokenCheck = true;
-        }
-        else{
-            var tokenCheck = false;
-        }
 
         const agent = useragent.parse(req.headers['user-agent']);
         const payload = agent.source;
@@ -29,8 +23,8 @@ module.exports = function(app, finedb) {
         jwt.sign(payload, secret, function(err, token){
             userToken = token;
             finedb.collection('SavedJSON').insert(
-                {link: link, data:dataJSON, deleteCheck: deleteCheck, privateCheck: privateCheck,  size: size,
-                    fileName: fileName, tokenCheck:tokenCheck, token: userToken}, (err) => {
+                {link: link, data:dataJSON, deleteCheck: deleteCheck, tokenCheck: tokenCheck,  size: size,
+                    fileName: fileName, token: userToken}, (err) => {
                     if (err) {
                         res.send({ 'error': 'An error has occurred' });
                     }

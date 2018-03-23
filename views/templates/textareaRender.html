@@ -1,9 +1,12 @@
 <script class="textareaTemplate" type="text/x-handlebars-template">
     {% verbatim %}
     <div>
-        <input type="text" placeholder="Название файла" class="fileName__input text" value="{{nameFile}}"><span class="text"> {{sizeStr}}</span>
-        <span class="errorMessage"></span>
-        <textarea class="textarea text" cols="76" rows="20">{{data}}</textarea>
+        <form class="fileName__form"></form>
+            <input type="text" placeholder="Название файла" class="fileName__input text" value="{{nameFile}}" name="fileName__input">
+            <span class="text"> {{sizeStr}}</span>
+            <span class="errorMessage"></span>
+        </form>
+        <textarea class="textarea text" cols="77" rows="20">{{data}}</textarea>
     </div>
     {% endverbatim %}
 </script>
