@@ -13,7 +13,9 @@
 9. Приватные ссылки на данные защищенные JWT
 
 ## Необходимые инструменты
-- sudo apt-get update && apt-get install -y nodejs npm
+- sudo apt-get update && sudo apt-get install curl
+- curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -
+- sudo apt-get install -y nodejs
 - в папке проекта npm install
 ## Запуск 
 - в папке проекта npm start
