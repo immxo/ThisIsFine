@@ -2,7 +2,7 @@
     {% verbatim %}
 
     {{#if_eq tokenCheck 'false'}}
-    <a href="/getJSON/{{link}}">Ваша ссылка для просмотра</a>
+    <a href="/getJSON/{{link}}">Ваша ссылка localhost:3000/getJSON/{{link}}</a>
     {{else}}
     <a href="/getJSON/{{link}}/{{token}}" >Ваша приватная ссылка для просмотра</a>
     {{/if_eq}}

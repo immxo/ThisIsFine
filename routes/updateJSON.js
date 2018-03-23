@@ -13,7 +13,7 @@ module.exports = function(app, finedb) {
         const stats = fs.statSync(file);
         const size = stats.size;
         fs.unlinkSync(file);
-        
+
         finedb.collection('SavedJSON').update({link: link},
             {link: link, data: dataJSON, deleteCheck: deleteCheck, size: size, fileName: fileName,tokenCheck: tokenCheck,
             token: token}, function(err){
